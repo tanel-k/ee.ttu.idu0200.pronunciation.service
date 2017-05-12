@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import ee.ttu.idu0200.pronunciation.service.data_service.InvalidWordException;
-import ee.ttu.idu0200.pronunciation.service.data_service.MissingWordContainerException;
 import ee.ttu.idu0200.pronunciation.service.data_service.WordContainerService;
+import ee.ttu.idu0200.pronunciation.service.data_service.objects.InvalidWordException;
+import ee.ttu.idu0200.pronunciation.service.data_service.objects.MissingWordContainerException;
 import ee.ttu.idu0200.pronunciation.service.data_service.objects.SimplifiedWordContainer;
 import ee.ttu.idu0200.pronunciation.service.model.WordContainer;
 import ee.ttu.idu0200.pronunciation.service.objects.MissingResourceException;
@@ -93,6 +93,16 @@ public class WordContainerController {
 		}
 		
 		return word.getPronunciation();
+	}
+
+	@RequestMapping(value = "/words/{wordId}", method = RequestMethod.GET)
+	public SimplifiedWordContainer getWord(@PathVariable String wordId) throws MissingResourceException {
+		SimplifiedWordContainer wordContainer = wordContainerService.getSimplifiedById(wordId);
+		if (wordContainer == null) {
+			throw new MissingResourceException();
+		}
+		
+		return wordContainer;
 	}
 
 	@ExceptionHandler({ MissingResourceException.class })
