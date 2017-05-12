@@ -62,7 +62,7 @@ public class WordContainerController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value = "/pronunciations/{wordId}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/words/{wordId}/pronunciation", method = RequestMethod.PUT)
 	public ResponseEntity<String> updatePronunciation(@PathVariable String wordId, @RequestParam(name = "pronunciation") MultipartFile pronunciation) {
 		if (pronunciation.isEmpty() || !AudioFileUtils.isMp3(pronunciation)) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -85,7 +85,7 @@ public class WordContainerController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/pronunciations/{wordId}", method = RequestMethod.GET, produces = { "audio/mpeg" })
+	@RequestMapping(value = "/words/{wordId}/pronunciation", method = RequestMethod.GET, produces = { "audio/mpeg" })
 	public byte[] getPronunciation(@PathVariable String wordId) throws MissingResourceException {
 		WordContainer word = wordContainerService.getById(wordId);
 		if (word == null) {
