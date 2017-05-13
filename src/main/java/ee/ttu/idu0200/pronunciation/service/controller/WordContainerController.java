@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,7 +42,7 @@ public class WordContainerController {
 	}
 
 	@RequestMapping(value = "/words", method = RequestMethod.PUT)
-	public ResponseEntity<String> putWord(@RequestParam(name = "word") String word, @RequestParam(name = "pronunciation") MultipartFile pronunciation) {
+	public ResponseEntity<String> putWord(@RequestPart(name = "word") String word, @RequestPart(name = "pronunciation") MultipartFile pronunciation) {
 		if (pronunciation.isEmpty() || !AudioFileUtils.isMp3(pronunciation)) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
